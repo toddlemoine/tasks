@@ -1,14 +1,12 @@
 import React from 'react';
-
 import { Route } from 'react-router';
-import App from './components/App';
 
-import Home from './components/Home';
+import App from './components/App';
+import Current from './components/Current';
 
 const routes = (
   <Route component={App}>
-    <Route path="/" component={Home} />
-     // put other routes here
+    <Route path="/" component={Current} />
   </Route>
 );
 

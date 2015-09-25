@@ -1,14 +1,13 @@
 import React, {PropTypes} from 'react';
 
-const App = React.createClass({
+import Header from './Header';
 
-  propTypes: typeof __DEV__ && {
-    children: PropTypes.object.isRequired
-  },
+var App = React.createClass({
 
   render() {
     return (
-      <div>
+      <div className="app">
+        <Header />
         {this.props.children}
       </div>
     );
