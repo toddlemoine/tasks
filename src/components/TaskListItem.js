@@ -15,6 +15,10 @@ var TaskListItem = React.createClass({
         TaskActions.update(this.props.task.set('status', status));
     },
 
+    handleViewClick () {
+        TaskActions.routeToView(this.props.task.get('id'));
+    },
+
     render () {
         let isDone = this.props.task.get('status') == DONE;
         let item = (
@@ -38,6 +42,9 @@ var TaskListItem = React.createClass({
                     onChange={this.handleStatusChange}
                     />
                 {item}
+                <button onClick={this.handleViewClick}>
+                    View
+                </button>
             </li>
         );
     }

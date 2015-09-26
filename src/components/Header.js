@@ -1,10 +1,11 @@
 import React, {PropTypes} from 'react';
+import TaskActions from '../actions/TaskActions';
 import style from "../styles/Header.styl";
 
 var Header = React.createClass({
 
     handleClick(route) {
-        console.log(route);
+        TaskActions.routeToList();
     },
 
     render () {

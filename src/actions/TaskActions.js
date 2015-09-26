@@ -1,5 +1,6 @@
 import alt from '../alt';
 import TaskService from '../services/TaskService';
+import history from '../history';
 
 class TaskActions {
   addNew (task) {
@@ -38,6 +39,14 @@ class TaskActions {
 
   readAllFailed (error) {
     this.dispatch(error);
+  }
+
+  routeToList () {
+    history.pushState(null, '/');
+  }
+
+  routeToView (taskId) {
+    history.pushState(null, `/view/${taskId}`);
   }
 
 }
