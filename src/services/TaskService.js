@@ -21,6 +21,13 @@ if (!ls.getItem(NAMESPACE)) {
 
 var TaskService = {
 
+    initialize (tasks = []) {
+        return new Promise((resolve, reject) => {
+            ls.setItem(NAMESPACE, JSON.stringify(tasks));
+            resolve(tasks);
+        });
+    },
+
     create (task) {
         return new Promise((resolve, reject) => {
 

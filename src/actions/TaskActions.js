@@ -41,6 +41,24 @@ class TaskActions {
     this.dispatch(error);
   }
 
+  reset (tasks) {
+    TaskService.initialize(tasks)
+      .then(() => this.actions.readAll())
+      .catch(error => this.actions.resetFailed(error));
+  }
+
+  clearDone () {
+    this.dispatch();
+  }
+
+  undo () {
+    this.dispatch();
+  }
+
+  resetFailed (error) {
+    this.dispatch(error);
+  }
+
   routeToList () {
     history.pushState(null, '/');
   }

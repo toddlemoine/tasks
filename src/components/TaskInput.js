@@ -24,6 +24,16 @@ var TaskInput = React.createClass({
         this.setState({ text });
     },
 
+    handleClearDoneClick (e) {
+        e.preventDefault();
+        TaskActions.clearDone();
+    },
+
+    handleUndo (e) {
+        e.preventDefault();
+        TaskActions.undo();
+    },
+
     render () {
         return (
             <form className={style.taskInput}>
@@ -33,6 +43,8 @@ var TaskInput = React.createClass({
                     onChange={this.handleInputChange}
                     value={this.state.text} />
                 <button type="submit" onClick={this.handleSubmit}> + </button>
+                <button onClick={this.handleClearDoneClick}>Clear Done</button>
+                <button onClick={this.handleUndo}>Undo</button>
             </form>
         );
     }
