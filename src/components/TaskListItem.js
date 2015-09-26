@@ -35,6 +35,7 @@ var TaskListItem = React.createClass({
 
         return (
             <li className={classnames("task", { done: isDone })}>
+                <span className="reorder">===</span>
                 <input
                     name={this.props.task.get('id')}
                     type="checkbox"

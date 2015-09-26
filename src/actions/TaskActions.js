@@ -55,6 +55,17 @@ class TaskActions {
     this.dispatch();
   }
 
+  reorder(tasks) {
+    TaskService.initialize(tasks)
+      .then(TaskService.readAll)
+      .then(response => this.dispatch(response))
+      .catch(error => this.actions.reorderFailed(error));
+  }
+
+  reorderFailed(error) {
+    this.dispatch(error);
+  }
+
   resetFailed (error) {
     this.dispatch(error);
   }

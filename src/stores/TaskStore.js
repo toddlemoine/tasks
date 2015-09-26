@@ -17,7 +17,7 @@ class TaskStore {
       handleUpdate: TaskActions.UPDATE,
       handleClearDone: TaskActions.CLEAR_DONE,
       handleUndo: TaskActions.UNDO,
-      // handleDestroy: TaskActions.DESTROY,
+      handleReorder: TaskActions.REORDER,
       // handleToggleHelp: TaskActions.TOGGLE_HELP
     });
   }
@@ -30,7 +30,6 @@ class TaskStore {
     let tasksMap = {};
     tasks.forEach(task => tasksMap[task.id] = task);
     this.tasks = Immutable.fromJS(tasksMap);
-    // history.push(this.tasks);
     this.clearErrors();
   }
 
@@ -59,6 +58,11 @@ class TaskStore {
   handleUndo () {
     let previous = history.pop();
     previous && TaskActions.reset(previous.toList());
+  }
+
+  handleReorder(tasks) {
+    history.push(this.tasks);
+    this.handleReadAll(tasks);
   }
 
 }
