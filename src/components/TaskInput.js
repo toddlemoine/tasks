@@ -16,7 +16,7 @@ var TaskInput = React.createClass({
     handleSubmit(e) {
         e.preventDefault();
         TaskActions.addNew({ text: this.state.text, status: PENDING });
-        this.setState({text: ''}, this._input.focus);
+        this.setState({text: ''}, () => this._input.focus);
     },
 
     handleInputChange(e) {
