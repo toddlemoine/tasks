@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react';
 import classnames from 'classnames';
 import TaskActions from '../actions/TaskActions';
-import {DONE} from '../constants';
+import {DONE, PENDING} from '../constants';
 
 var TaskListItem = React.createClass({
 
@@ -9,8 +9,14 @@ var TaskListItem = React.createClass({
         TaskActions.update(this.props.task.set('text', e.target.value));
     },
 
+    handleStatusChange (e) {
+        // Toggle our status
+        let status = this.props.task.get('status') == DONE ? PENDING : DONE;
+        TaskActions.update(this.props.task.set('status', status));
+    },
+
     render () {
-        let isDone = this.props.status == DONE;
+        let isDone = this.props.task.get('status') == DONE;
         let item = (
             <input
                 type="text"
@@ -20,7 +26,7 @@ var TaskListItem = React.createClass({
             );
 
         if (isDone) {
-            item = <label>this.props.task.get('text')</label>;
+            item = <label>{this.props.task.get('text')}</label>;
         }
 
         return (
@@ -28,7 +34,9 @@ var TaskListItem = React.createClass({
                 <input
                     name={this.props.task.get('id')}
                     type="checkbox"
-                    checked={!!this.props.task.get('status')}/>
+                    checked={isDone}
+                    onChange={this.handleStatusChange}
+                    />
                 {item}
             </li>
         );
