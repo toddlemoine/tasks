@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 
 import Current from './Current';
 import TaskStore from '../stores/TaskStore';
+import TaskActions from '../actions/TaskActions';
 
 var CurrentContainer = React.createClass({
     getInitialState () {
@@ -10,18 +11,19 @@ var CurrentContainer = React.createClass({
 
     componentDidMount () {
         TaskStore.listen(this.handleStoreChange);
+        TaskActions.readAll();
     },
 
     componentWillUnmount () {
         TaskStore.unlisten(this.handleStoreChange);
     },
 
-    handleStoreChange (tasks) {
-        this.setState(tasks);
+    handleStoreChange (state) {
+        this.setState(state);
     },
 
     render() {
-        return <Current tasks={this.state.tasks} />;
+        return <Current tasks={this.state.tasks.toList()} />;
     }
 });
 

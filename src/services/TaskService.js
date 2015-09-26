@@ -20,6 +20,7 @@ if (!ls.getItem(NAMESPACE)) {
 }
 
 var TaskService = {
+
     create (task) {
         return new Promise((resolve, reject) => {
 
@@ -30,14 +31,32 @@ var TaskService = {
                 // Assign a unique id for each task for easy sharing and look-up,
                 // and timestamp for filtering or grouping.
                 task.timestamp = Date.now();
-                task.id = Uuid.create();
+                task.id = Uuid.create().value;
 
                 // Persist the task
                 let tasks = JSON.parse(ls.getItem(NAMESPACE));
-                ls.setItem(NAMESPACE, JSON.stringify(tasks.push(task)));
+                tasks.push(task);
+                ls.setItem(NAMESPACE, JSON.stringify(tasks));
 
                 // And return it for use in the store, just as you would hope a typical
                 // CREATE call to return the object created.
+                resolve(task);
+            }
+        });
+    },
+
+    update (task) {
+        return new Promise((resolve, reject) => {
+            if (!isValid(task)) {
+                reject(new Error(ERRORS.INVALID_TASK));
+            } else {
+                // Persist the task by getting the collection, looking up the existing by id,
+                // assign new props, and resave collection. Because the existing object in the
+                // collection is just reference, we don't have to update the collection itself.
+                let tasks = JSON.parse(ls.getItem(NAMESPACE));
+                let existing = tasks.find(t => t.id == task.id);
+                Object.assign(existing, task);
+                ls.setItem(NAMESPACE, JSON.stringify(tasks));
                 resolve(task);
             }
         });

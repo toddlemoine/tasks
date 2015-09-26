@@ -1,12 +1,12 @@
 import React, {PropTypes} from 'react';
 import classnames from 'classnames';
-
+import TaskActions from '../actions/TaskActions';
 import {DONE} from '../constants';
 
 var TaskListItem = React.createClass({
 
     handleTextChange(e) {
-        console.log('text', e.target.value);
+        TaskActions.update(this.props.task.set('text', e.target.value));
     },
 
     render () {

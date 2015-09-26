@@ -4,12 +4,22 @@ import TaskService from '../services/TaskService';
 class TaskActions {
   addNew (task) {
     TaskService.create(task)
-        .then(this.dispatch)
-        .catch(this.dispatch);
+        .then(response => this.dispatch(response))
+        .catch(error => this.actions.addNewFailed(error));
+  }
+
+  addNewFailed(error) {
+    this.dispatch(error);
   }
 
   update(task) {
-    this.dispatch(task);
+    TaskService.update(task.toJS())
+        .then(response => this.dispatch(response))
+        .catch(error => this.actions.updateFailed(error));
+  }
+
+  updateFailed(error) {
+    this.dispatch(error);
   }
 
   archive(task) {
@@ -22,9 +32,12 @@ class TaskActions {
 
   readAll() {
     TaskService.readAll()
-        .then(this.dispatch)
-        .catch(this.dispatch);
+        .then(response => this.dispatch(response))
+        .catch(error => this.actions.readAllFailed(error));
+  }
 
+  readAllFailed (error) {
+    this.dispatch(error);
   }
 
 }

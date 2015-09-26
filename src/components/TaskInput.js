@@ -1,4 +1,6 @@
 import React, {PropTypes} from 'react';
+import TaskActions from '../actions/TaskActions';
+import {PENDING} from '../constants';
 import style from "../styles/TaskInput.styl"
 
 var TaskInput = React.createClass({
@@ -7,8 +9,10 @@ var TaskInput = React.createClass({
         return { text: this.props.text };
     },
 
-    handleSubmit() {
-
+    handleSubmit(e) {
+        e.preventDefault();
+        TaskActions.addNew({ text: this.state.text, status: PENDING });
+        this.setState({text: ''});
     },
 
     handleInputChange(e) {
