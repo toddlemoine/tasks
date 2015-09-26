@@ -51,6 +51,7 @@ class TaskStore {
   }
 
   handleClearDone () {
+    history.push(this.tasks);
     this.tasks = this.tasks.filterNot(task => task.get('status') == DONE);
     TaskActions.reset(this.tasks.toList());
   }
