@@ -9,10 +9,14 @@ var TaskInput = React.createClass({
         return { text: this.props.text };
     },
 
+    componentDidMount() {
+        this._input.focus();
+    },
+
     handleSubmit(e) {
         e.preventDefault();
         TaskActions.addNew({ text: this.state.text, status: PENDING });
-        this.setState({text: ''});
+        this.setState({text: ''}, this._input.focus);
     },
 
     handleInputChange(e) {
@@ -24,6 +28,7 @@ var TaskInput = React.createClass({
         return (
             <form className={style.taskInput}>
                 <input type="text"
+                    ref={ component => this._input = component }
                     name="task"
                     onChange={this.handleInputChange}
                     value={this.state.text} />
