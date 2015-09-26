@@ -1,7 +1,7 @@
 import Immutable from 'immutable';
 import alt from '../alt';
 import TaskActions from '../actions/TaskActions';
-import {DONE} from '../constants';
+import {PENDING, DONE} from '../constants';
 
 var history = [];
 

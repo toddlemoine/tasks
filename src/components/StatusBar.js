@@ -8,7 +8,7 @@ var StatusBar = React.createClass({
     render () {
         let bgColor = this.props.percentDone == null ?
             {backgroundColor: '#ddd'} :
-            {backgroundColor: `hsl(${this.props.percentDone}, 100%, 50%)`};
+            {backgroundColor: `hsl(${this.props.percentDone}, 85%, 50%)`};
         return <div className={style.statusBar} style={bgColor} />;
     }
 });

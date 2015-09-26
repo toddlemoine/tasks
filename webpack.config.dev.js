@@ -43,7 +43,12 @@ module.exports = {
     }, {
       test: /\.styl$/,
       loader: 'style!css?modules&localIdentName=[name]---[local]---[hash:base64:5]!stylus'
-    }]
+    },
+    {
+        test: /\.(png|jpg|svg)$/,
+        loader: 'url-loader?limit=8192'
+    }
+    ]
   },
   _hotPort: 8000
 };

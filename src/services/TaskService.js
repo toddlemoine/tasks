@@ -1,22 +1,43 @@
 // TaskService
 // -----------
 // TaskService is a localStorage interface for persisting tasks.
-// By providing a common api, it could easily be swapped
-// with a different persistance implementation, such as ajax
+// By providing a common *Service api, it could easily be swapped
+// with a different persistance implementation, such as ajax,
 // sessionStorage, or websocket.
 
-// All methods exposed by the TaskService returns a promise to ensure
-// an easy, consistent api.
+// All methods exposed by the TaskService return a promise.
 
-import {NAMESPACE, ERRORS} from '../constants';
+import {NAMESPACE, ERRORS, PENDING} from '../constants';
 import Uuid from 'uuid-lib';
 
-// Assuming supoprt for localStorage
+// Assuming support for localStorage
 const ls = window.localStorage;
 
-// Initialize our storage with an empty array.
+function generateTasks() {
+  let verbs = ['Fetch', 'Prune', 'Buy', 'Feed', 'Endorse'];
+  let quantifier = ['the', 'all the', 'some of the', 'any'];
+  let objects = ['groceries', 'clothes', 'kiwis', 'happiness', 'stubble'];
+  let tasks = [];
+  for (var i=1; i<=5; i++) {
+    let v = getRandom(verbs);
+    let q = getRandom(quantifier);
+    let o = getRandom(objects);
+    tasks.push({ id: Uuid.create().value, text: [v,q,o].join(' '), status: PENDING });
+  }
+  return tasks;
+}
+
+// Random part taken shamelessly from MDN:
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random.
+function getRandom(collection) {
+  let min = 0;
+  let max = collection.length;
+  return collection[Math.floor(Math.random() * (max - min)) + min] ;
+}
+
+// Initialize our storage with some sample tasks.
 if (!ls.getItem(NAMESPACE)) {
-    ls.setItem(NAMESPACE, JSON.stringify([]));
+    ls.setItem(NAMESPACE, JSON.stringify(generateTasks()));
 }
 
 var TaskService = {

@@ -1,7 +1,12 @@
 import React, {PropTypes} from 'react';
 import classnames from 'classnames';
 import TaskActions from '../actions/TaskActions';
+import LinkButton from './LinkButton';
 import {DONE, PENDING} from '../constants';
+
+import style from '../styles/TaskList.styl';
+import linkIntactIcon from '../images/link-intact.svg';
+import reorderIcon from '../images/grid-three-up-2x.png';
 
 var TaskListItem = React.createClass({
 
@@ -34,8 +39,10 @@ var TaskListItem = React.createClass({
         }
 
         return (
-            <li className={classnames("task", { done: isDone })}>
-                <span className="reorder">===</span>
+            <li className={classnames(style.task, { [style.done]: isDone })}>
+                <span className="reorder">
+                    ##
+                </span>
                 <input
                     name={this.props.task.get('id')}
                     type="checkbox"
@@ -43,9 +50,9 @@ var TaskListItem = React.createClass({
                     onChange={this.handleStatusChange}
                     />
                 {item}
-                <button onClick={this.handleViewClick}>
-                    View
-                </button>
+                <LinkButton onClick={this.handleViewClick}>
+                    <img src={linkIntactIcon} alt="View or share this task" />
+                </LinkButton>
             </li>
         );
     }

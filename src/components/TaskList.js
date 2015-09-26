@@ -1,10 +1,13 @@
 import React, {PropTypes} from 'react';
 import Slip from 'slipjs';
 import TaskActions from '../actions/TaskActions';
+import LinkButton from './LinkButton';
 import TaskListItem from './TaskListItem';
 import StatusBar from './StatusBar';
 import {DONE} from '../constants';
 
+import actionUndoIcon from '../images/action-undo.svg';
+import taskIcon from '../images/task.svg';
 import style from '../styles/TaskList.styl';
 
 var TaskList = React.createClass({
@@ -29,14 +32,43 @@ var TaskList = React.createClass({
         return false;
     },
 
+    handleClearDoneClick (e) {
+        e.preventDefault();
+        TaskActions.clearDone();
+    },
+
+    handleUndo (e) {
+        e.preventDefault();
+        TaskActions.undo();
+    },
+
     render () {
         let numberDone = this.props.tasks.filter(task => task.get('status') == DONE).size;
         let percentDone = Math.round((numberDone/this.props.tasks.size) * 100);
+        let items;
+
+        if (this.props.tasks.size == 0 ) {
+            items = <li className={style.allDone}>Now, just look at that. You're all done!</li>
+        } else {
+            items = this.props.tasks.map((task, index) => <TaskListItem key={index +'.'+ task.get('id')} task={task} />)
+        }
+
         return (
             <div className={style.taskList}>
                 <StatusBar percentDone={percentDone} />
+                <div className={style.actionGroup}>
+                    <LinkButton onClick={this.handleClearDoneClick}
+                        disabled={this.props.tasks.size == 0 || numberDone == 0}>
+                        <img src={taskIcon} alt="Permanently remove `done` items from your list." />
+                        Sweep all done
+                    </LinkButton>
+                    <LinkButton onClick={this.handleUndo}>
+                        <img src={actionUndoIcon} alt="Undo last action"/>
+                        Undo
+                    </LinkButton>
+                </div>
                 <ul ref="list">
-                    {this.props.tasks.map((task, index) => <TaskListItem key={index +'.'+ task.get('id')} task={task} />)}
+                    {items}
                 </ul>
             </div>
         );
