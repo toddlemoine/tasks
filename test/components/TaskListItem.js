@@ -1,11 +1,14 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import TaskListItem from '../../src/components/TaskListItem';
 import * as utils from '../utils';
 import TestUtils from 'react-addons-test-utils';
+import TaskActions from '../../src/actions/TaskActions';
 
 describe('TaskListItem', () => {
-
+    var funcs = {};
+    const componentMethods = ['handleViewClick', 'handleTextChange', 'handleStatusChange'];
     const task = Immutable.Map({
         id: '79bd3b7c98c6d9717e955dd885a317db',
         text: 'Apples',
@@ -13,35 +16,67 @@ describe('TaskListItem', () => {
         timestamp: Date.now()
     });
 
-    const component = utils.shallowlyRenderedOutput(<TaskListItem task={task} />);
+    // Adopting a convention that the underscore-component is the shallowRender
+    // representation of it.
+    const listItemComponent = <TaskListItem task={task} />;
+    const _listItemComponent = utils.shallowlyRenderedOutput(listItemComponent);
+
+    // Keep a reference to original, auto-bound methods, so we can stub or spy them
+    // without disrupting other tests.
+    var node;
+
+    beforeEach(() => {
+        node = TestUtils.renderIntoDocument(listItemComponent);
+    });
+
+    afterEach(() => {
+        node = null;
+        funcs = {}
+    });
 
     it('should be an LI', () => {
-        assert.equal(component.type, 'li');
+        assert.equal(_listItemComponent.type, 'li');
     });
 
     it('should contain a reorder icon', () => {
-      // expect(typeof TestUtils.isElementOfType(component.props.children) !== 'undefined').to.be.true;
-
+        assert.equal(_listItemComponent.props.children[0].props.children, '::');
     });
 
     it('should show an item as text when marked done', () => {
-
+        const doneItem = utils.shallowlyRenderedOutput(<TaskListItem task={task.set('status', 1)} />);
+        assert.equal(doneItem.props.children[2].type, 'label');
     });
 
     it('should show an item as input when marked pending', () => {
-
+        assert.equal(_listItemComponent.props.children[2].type, 'input');
     });
 
     it('should have a link to share or view the task', () => {
+        assert.equal(_listItemComponent.props.children[3].type.displayName, 'LinkButton');
 
+        let actionStub = sinon.stub(TaskActions, 'routeToView');
+        TestUtils.Simulate.click(ReactDOM.findDOMNode(node.refs.viewLink));
+        assert.ok(actionStub.called);
+        actionStub.restore();
     });
 
-    it('should update the task text on change', () => {
 
+    it('should update the task text on change', () => {
+        let actionStub = sinon.stub(TaskActions, 'update');
+        TestUtils.Simulate.change(ReactDOM.findDOMNode(node.refs.text), {
+            target: { value: 'Bananas' }
+        });
+        let updatedTask = actionStub.getCall(0).args[0];
+        assert.equal('Bananas', updatedTask.get('text'));
+        actionStub.restore();
     });
 
     it('should update the task status when the checkbox is toggled', () => {
-
+        let actionStub = sinon.stub(TaskActions, 'update');
+        TestUtils.Simulate.change(ReactDOM.findDOMNode(node.refs.status));
+        let updatedTask = actionStub.getCall(0).args[0];
+        assert.equal(1, updatedTask.get('status'));
+        actionStub.restore();
     });
 
 });

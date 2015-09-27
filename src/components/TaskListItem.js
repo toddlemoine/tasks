@@ -27,6 +27,7 @@ var TaskListItem = React.createClass({
         let isDone = this.props.task.get('status') == DONE;
         let item = (
             <input
+                ref="text"
                 type="text"
                 name="text"
                 value={this.props.task.get('text')}
@@ -39,18 +40,16 @@ var TaskListItem = React.createClass({
 
         return (
             <li className={classnames(style.task, { [style.done]: isDone })}>
-                <span className={style.reorder}>
-                    &#720;
-                </span>
+                <span className={style.reorder}>::</span>
                 <input
+                    ref="status"
                     name={this.props.task.get('id')}
                     type="checkbox"
                     checked={isDone}
                     onChange={this.handleStatusChange}
                     />
                 {item}
-                <LinkButton onClick={this.handleViewClick}>
-                    #
+                <LinkButton ref="viewLink" onClick={this.handleViewClick}>
                     <img src={linkIntactIcon} alt="View or share this task" />
                 </LinkButton>
             </li>
