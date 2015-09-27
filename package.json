@@ -1,14 +1,9 @@
 {
-  "name": "react-kickstart",
-  "version": "2.0.2",
-  "description": "just another react + webpack boilerplate.",
+  "name": "tasks",
+  "version": "1.0.0",
+  "description": "task manager",
   "private": true,
-  "author": "Alessandro Arnodo <alessandro@arnodo.net> (https://alessandro.arnodo.net)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/vesparny/react-kickstart/issues"
-  },
-  "homepage": "https://github.com/vesparny/react-kickstart",
+  "author": "Todd Lemoine <todd.lemoine@gmail.com>",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test mocha --require ./test/test-init --compilers js:babel/register --recursive",
