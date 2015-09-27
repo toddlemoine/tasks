@@ -7,8 +7,6 @@ import TestUtils from 'react-addons-test-utils';
 import TaskActions from '../../src/actions/TaskActions';
 
 describe('TaskListItem', () => {
-    var funcs = {};
-    const componentMethods = ['handleViewClick', 'handleTextChange', 'handleStatusChange'];
     const task = Immutable.Map({
         id: '79bd3b7c98c6d9717e955dd885a317db',
         text: 'Apples',
@@ -20,9 +18,6 @@ describe('TaskListItem', () => {
     // representation of it.
     const listItemComponent = <TaskListItem task={task} />;
     const _listItemComponent = utils.shallowlyRenderedOutput(listItemComponent);
-
-    // Keep a reference to original, auto-bound methods, so we can stub or spy them
-    // without disrupting other tests.
     var node;
 
     beforeEach(() => {
@@ -31,7 +26,6 @@ describe('TaskListItem', () => {
 
     afterEach(() => {
         node = null;
-        funcs = {}
     });
 
     it('should be an LI', () => {

@@ -17,9 +17,24 @@ class TaskStore {
       handleUpdate: TaskActions.UPDATE,
       handleClearDone: TaskActions.CLEAR_DONE,
       handleUndo: TaskActions.UNDO,
-      handleReorder: TaskActions.REORDER,
-      // handleToggleHelp: TaskActions.TOGGLE_HELP
+      handleReorder: TaskActions.REORDER
     });
+
+    this.exportPublicMethods({
+      _getHistory: this._getHistory,
+      _resetHistory: this._resetHistory
+    });
+
+  }
+
+  // "Internal" only methods, to help with testing.
+  _getHistory () {
+    return history;
+  }
+
+  _resetHistory () {
+    history = [];
+    return history;
   }
 
   clearErrors () {

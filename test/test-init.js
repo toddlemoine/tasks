@@ -24,7 +24,6 @@ global.window.localStorage = {
 
 global.React = React;
 
-
 // ensure requiring css not to throw
 require.extensions['.css'] = function() {
   return null;
