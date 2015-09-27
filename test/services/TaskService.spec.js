@@ -4,7 +4,9 @@ import TaskService from '../../src/services/TaskService';
 import {ERRORS} from '../../src/constants';
 
 describe('TaskService', () => {
+
     describe('create', () => {
+
         it('should return a promise', () => {
             assert.instanceOf(TaskService.create(), Promise);
         });

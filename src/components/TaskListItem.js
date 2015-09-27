@@ -6,7 +6,6 @@ import {DONE, PENDING} from '../constants';
 
 import style from '../styles/TaskList.styl';
 import linkIntactIcon from '../images/link-intact.svg';
-import reorderIcon from '../images/grid-three-up-2x.png';
 
 var TaskListItem = React.createClass({
 
@@ -51,6 +50,7 @@ var TaskListItem = React.createClass({
                     />
                 {item}
                 <LinkButton onClick={this.handleViewClick}>
+                    #
                     <img src={linkIntactIcon} alt="View or share this task" />
                 </LinkButton>
             </li>
