@@ -40,8 +40,8 @@ var TaskListItem = React.createClass({
 
         return (
             <li className={classnames(style.task, { [style.done]: isDone })}>
-                <span className="reorder">
-                    ##
+                <span className={style.reorder}>
+                    &#720;
                 </span>
                 <input
                     name={this.props.task.get('id')}
