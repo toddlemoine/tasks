@@ -52,6 +52,10 @@ module.exports = {
     }, {
       test: /\.styl$/,
       loader: ExtractTextPlugin.extract('style', 'css?modules&localIdentName=[name]---[local]---[hash:base64:5]!postcss!stylus')
+    },
+    {
+        test: /\.(png|jpg|svg)$/,
+        loader: 'url-loader?limit=8192'
     }]
   },
   postcss: [
