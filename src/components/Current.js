@@ -6,7 +6,7 @@ import style from "../styles/Current.styl"
 
 var Current = React.createClass({
     propTypes: {
-
+        tasks: PropTypes.object
     },
 
     handleClearDoneClick (e) {
@@ -22,7 +22,7 @@ var Current = React.createClass({
     render() {
         return (
             <div className={style.current}>
-                <h1>Current Tasks</h1>
+                <h1>Tasks</h1>
                 <TaskInput text="" />
                 <TaskList tasks={this.props.tasks} />
             </div>

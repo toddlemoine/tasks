@@ -14,7 +14,7 @@ var TaskListItem = React.createClass({
     },
 
     handleStatusChange (e) {
-        // Toggle our status
+        // Toggle our status based on our data, not the form component state.
         let status = this.props.task.get('status') == DONE ? PENDING : DONE;
         TaskActions.update(this.props.task.set('status', status));
     },

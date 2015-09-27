@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import Slip from 'slipjs';
 import TaskActions from '../actions/TaskActions';
 import LinkButton from './LinkButton';
@@ -15,7 +16,7 @@ var TaskList = React.createClass({
         tasks: PropTypes.object
     },
     componentDidMount() {
-        let list = React.findDOMNode(this.refs.list);
+        let list = ReactDOM.findDOMNode(this.refs.list);
         new Slip(list);
         list.addEventListener('slip:beforewait', (e) => {
             if ( nodeIsDragHandle(e.target) ) e.preventDefault();
